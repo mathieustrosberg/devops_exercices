@@ -53,10 +53,10 @@ jobs:
 
           # Appel API DynaPictures
           RESPONSE=$(curl -s -X POST \
-            "https://api.dynapictures.com/designs/${{ secrets.DYNAPICTURES_TEMPLATE_UID }}/image" \
+            "https://api.dynapictures.com/designs/${{ secrets.DYNAPICTURES_TEMPLATE_UID }}" \
             -H "Authorization: Bearer ${{ secrets.DYNAPICTURES_API_KEY }}" \
             -H "Content-Type: application/json" \
-            -d "{\"params\": [{\"name\": \"text\", \"value\": \"${{ steps.commit.outputs.message }}\"}]}")
+            -d "{\"params\":[{\"name\":\"Headline\",\"text\":\"${{ steps.commit.outputs.message }}\"}]}")
 
           echo "Réponse API : $RESPONSE"
 
