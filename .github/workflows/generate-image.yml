@@ -10,7 +10,7 @@
 #
 # Prérequis :
 #   - Ajouter DYNAPICTURES_API_KEY dans les Secrets du dépôt
-#   - Ajouter DYNAPICTURES_TEMPLATE_ID dans les Secrets du dépôt
+#   - Ajouter DYNAPICTURES_TEMPLATE_UID dans les Secrets du dépôt
 #   - Activer GitHub Pages (Settings > Pages > Source: gh-pages branch)
 
 name: "Exercice 02 - Génération Image IA & Déploiement GitHub Pages"
@@ -18,7 +18,7 @@ name: "Exercice 02 - Génération Image IA & Déploiement GitHub Pages"
 on:
   push:
     branches:
-      - main
+      - exercice-02
   workflow_dispatch:
 
 permissions:
@@ -53,7 +53,7 @@ jobs:
 
           # Appel API DynaPictures
           RESPONSE=$(curl -s -X POST \
-            "https://api.dynapictures.com/designs/${{ secrets.DYNAPICTURES_TEMPLATE_ID }}/image" \
+            "https://api.dynapictures.com/designs/${{ secrets.DYNAPICTURES_TEMPLATE_UID }}/image" \
             -H "Authorization: Bearer ${{ secrets.DYNAPICTURES_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d "{\"params\": [{\"name\": \"text\", \"value\": \"${{ steps.commit.outputs.message }}\"}]}")
