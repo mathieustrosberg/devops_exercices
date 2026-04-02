@@ -1,0 +1,36 @@
+# ============================================================
+# Exercice 01 — Déclenchement Automatique & Message de Commit
+# ============================================================
+# Ce workflow :
+#   - Se déclenche à chaque push sur la branche main
+#   - Peut être lancé manuellement via workflow_dispatch
+#   - Affiche le message du dernier commit dans la console
+
+name: "Exercice 01 - Message du Commit"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  afficher-message-commit:
+    name: Récupérer et afficher le message du commit
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Checkout du code (nécessaire pour accéder à l'historique git)
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Récupère tout l'historique git
+
+      # Étape 2 : Récupérer et afficher le message du dernier commit
+      - name: Afficher le message du dernier commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "============================================"
+          echo "  Message du dernier commit :"
+          echo "  $COMMIT_MSG"
+          echo "============================================"
