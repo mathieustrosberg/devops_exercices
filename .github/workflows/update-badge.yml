@@ -1,0 +1,51 @@
+# ============================================================
+# Exercice 05 — Mise à jour automatique d'un badge dynamique
+# ============================================================
+# Ce workflow :
+#   - Se déclenche à chaque push sur main
+#   - Compte le nombre total de commits sur le dépôt
+#   - Met à jour un badge dynamique via un Gist GitHub
+#
+# Prérequis :
+#   - Créer un Gist vide sur https://gist.github.com
+#   - Ajouter GIST_TOKEN dans les Secrets (token avec scope "gist")
+#   - Ajouter GIST_ID dans les Secrets (l'ID du Gist créé)
+
+name: "Exercice 05 - Mise à jour du badge dynamique"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update-badge:
+    name: Mettre à jour le badge dynamique
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Checkout du dépôt
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Étape 2 : Compter le nombre total de commits
+      - name: Compter le nombre de commits
+        id: count
+        run: |
+          COUNT=$(git rev-list --count HEAD)
+          echo "Nombre de commits : $COUNT"
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+
+      # Étape 3 : Mettre à jour le badge dynamique via le Gist
+      - name: Mettre à jour le badge dynamique
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: ${{ secrets.GIST_ID }}
+          filename: badge-commits.json
+          label: commits
+          message: ${{ steps.count.outputs.count }}
+          color: blue
