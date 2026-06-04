@@ -55,6 +55,14 @@ jobs:
           echo "Image générée : images/$IMAGE_NAME"
           echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
+      - name: Récupérer les images existantes depuis gh-pages
+        run: |
+          git fetch origin gh-pages 2>/dev/null || true
+          for file in $(git ls-tree --name-only origin/gh-pages 2>/dev/null | grep -E '\.(png|jpg)$'); do
+            git show "origin/gh-pages:$file" > "images/$file"
+          done
+          echo "Total images dans la galerie : $(ls images/*.png images/*.jpg 2>/dev/null | wc -l)"
+
       - name: Générer le fichier index.html
         run: |
           cat > images/index.html << 'EOF'
