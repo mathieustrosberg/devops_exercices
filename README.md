@@ -15,6 +15,13 @@ Ce repository contient tous les exercices du cours, classés par ordre de progre
 
 ---
 
+## 🖼️ Galerie des images générées
+
+Les images générées automatiquement par GitHub Actions sont visibles ici :
+**[👉 Voir la galerie](https://mathieustrosberg.github.io/devops_exercices/)**
+
+---
+
 ## ⚙️ Statut des workflows
 
 | Exercice | Workflow | Statut |
