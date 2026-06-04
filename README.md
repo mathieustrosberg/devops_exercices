@@ -10,7 +10,7 @@ Ce repository contient tous les exercices du cours, classés par ordre de progre
 ![GitHub contributors](https://img.shields.io/github/contributors/mathieustrosberg/devops_exercices?label=contributeurs)
 ![GitHub stars](https://img.shields.io/github/stars/mathieustrosberg/devops_exercices?label=%C3%A9toiles)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mathieustrosberg/devops_exercices?label=dernier%20commit)
-![Commits](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/mathieustrosberg/GIST_ID/raw/badge-commits.json)
+![Commits](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/mathieustrosberg/012415d93f6a3b93357b576aca29e641/raw/badge-commits.json)
 
 ---
 

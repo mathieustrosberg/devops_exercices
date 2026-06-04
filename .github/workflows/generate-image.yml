@@ -18,7 +18,7 @@ name: "Exercice 02 - Génération Image IA & Déploiement GitHub Pages"
 on:
   push:
     branches:
-      - exercice-02
+      - main
   workflow_dispatch:
 
 permissions:

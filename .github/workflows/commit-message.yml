@@ -11,7 +11,7 @@ name: "Exercice 01 - Message du Commit"
 on:
   push:
     branches:
-      - exercice-01
+      - main
   workflow_dispatch:
 
 jobs:
