@@ -31,7 +31,7 @@ Ce repository contient tous les exercices du cours, classés par ordre de progre
 | # | Titre | Description |
 |---|---|---|
 | 01 | Déclenchement automatique | Afficher le message du dernier commit dans la console |
-| 02 | Génération image IA | Générer une image via DynaPictures et déployer sur GitHub Pages |
+| 02 | Génération image | Générer une image via ImageMagick et déployer sur GitHub Pages |
 | 03 | Notification Discord | Envoyer une notification Discord avec l'image générée |
 | 04 | Commentaire sur commit | Ajouter automatiquement un commentaire avec l'image sur le commit |
 | 05 | Badges dynamiques | Automatiser la mise à jour de badges via GitHub Actions et Shields.io |

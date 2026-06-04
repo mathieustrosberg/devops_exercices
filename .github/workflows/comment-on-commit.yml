@@ -1,17 +1,3 @@
-# ============================================================
-# Exercice 04 — Commentaire Automatique sur le Commit avec l'Image Générée
-# ============================================================
-# Ce workflow :
-#   - Se déclenche après la fin du workflow de génération d'image
-#   - Télécharge l'artefact contenant l'image générée
-#   - Extrait dynamiquement le nom du fichier image
-#   - Construit l'URL de l'image hébergée sur GitHub Pages
-#   - Ajoute un commentaire sur le commit avec le message et l'image
-#
-# Prérequis :
-#   - Le workflow generate-image.yml doit uploader l'artefact image-generee
-#   - Le GITHUB_TOKEN est fourni automatiquement par GitHub Actions
-
 name: "Exercice 04 - Commentaire Automatique sur le Commit"
 
 on:
@@ -31,22 +17,18 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
-      # Étape 1 : Checkout du dépôt au commit qui a déclenché le workflow
       - name: Checkout du dépôt
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
-      # Étape 2 : Récupérer le message du commit
       - name: Récupérer le message du commit
         id: commit
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
           echo "message=$COMMIT_MSG" >> $GITHUB_OUTPUT
-          echo "Commit message : $COMMIT_MSG"
 
-      # Étape 3 : Télécharger l'artefact image-generee
       - name: Télécharger l'artefact image-generee
         uses: actions/download-artifact@v4
         with:
@@ -55,24 +37,19 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Étape 4 : Extraire dynamiquement le nom du fichier image
       - name: Extraire le nom du fichier image
         id: image
         run: |
           IMAGE_NAME=$(ls ./artifacts/ | head -n 1)
-          echo "Fichier image trouvé : $IMAGE_NAME"
           echo "name=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      # Étape 5 : Construire l'URL de l'image hébergée sur GitHub Pages
       - name: Construire l'URL de l'image
         id: url
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           IMAGE_URL="https://${{ github.repository_owner }}.github.io/${REPO_NAME}/${{ steps.image.outputs.name }}"
-          echo "URL de l'image : $IMAGE_URL"
           echo "image_url=$IMAGE_URL" >> $GITHUB_OUTPUT
 
-      # Étape 6 : Ajouter un commentaire sur le commit avec l'image
       - name: Ajouter un commentaire sur le commit
         uses: actions/github-script@v6
         env:
@@ -91,5 +68,3 @@ jobs:
               commit_sha: commitSha,
               body: `🎨 **Image générée automatiquement pour ce commit !**\n\n**Message du commit :** ${commitMsg}\n\n![Image générée](${imageUrl})\n\n🔗 **Lien de l'image :** ${imageUrl}`
             });
-
-            console.log('Commentaire ajouté avec succès sur le commit ' + commitSha);

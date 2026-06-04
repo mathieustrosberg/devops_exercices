@@ -1,13 +1,3 @@
-# ============================================================
-# Exercice 02 — Génération d'Image & Déploiement GitHub Pages
-# ============================================================
-# Ce workflow :
-#   - Récupère le message du dernier commit
-#   - Génère une image personnalisée avec ImageMagick
-#   - Sauvegarde l'image dans /images/
-#   - Génère un index.html listant toutes les images
-#   - Déploie le tout sur GitHub Pages
-
 name: "Exercice 02 - Génération Image IA & Déploiement GitHub Pages"
 
 on:
@@ -25,13 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Checkout du code
       - name: Checkout du dépôt
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Étape 2 : Récupérer le message du dernier commit
       - name: Récupérer le message du commit
         id: commit
         run: |
@@ -39,11 +27,9 @@ jobs:
           echo "message=$COMMIT_MSG" >> $GITHUB_OUTPUT
           echo "Commit message : $COMMIT_MSG"
 
-      # Étape 3 : Installer ImageMagick
       - name: Installer ImageMagick
         run: sudo apt-get install -y imagemagick
 
-      # Étape 4 : Générer une image avec ImageMagick
       - name: Générer l'image avec ImageMagick
         id: generate
         env:
@@ -69,7 +55,6 @@ jobs:
           echo "Image générée : images/$IMAGE_NAME"
           echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
-      # Étape 5 : Générer le fichier index.html
       - name: Générer le fichier index.html
         run: |
           cat > images/index.html << 'EOF'
@@ -105,16 +90,12 @@ jobs:
           </html>
           EOF
 
-          echo "index.html généré avec succès"
-
-      # Étape 6 : Uploader l'image comme artefact (utilisé par les exercices 03 et 04)
       - name: Uploader l'image comme artefact
         uses: actions/upload-artifact@v4
         with:
           name: image-generee
           path: images/${{ steps.generate.outputs.image_name }}
 
-      # Étape 7 : Déployer sur GitHub Pages
       - name: Déployer sur GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
